@@ -1,0 +1,46 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class GFG {
+	public static void main (String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int t = sc.nextInt();
+		while(t-->0)
+		{
+		    int temp , x , max = 1;
+		    int n = sc.nextInt();
+		    int a[] = new int[n];
+		    HashMap<Integer , Boolean> hmap = new HashMap<>();
+		    for(int i = 0; i<n ; i++)
+		    {
+		        a[i] = sc.nextInt();
+		        hmap.put(a[i] , false);
+		    }
+		    for(int i =0; i<n ; i++)
+		    {
+		        temp = a[i];
+		        if(hmap.get(temp)==true)
+		        continue;
+		        else
+		        {
+		         x = 1;
+		         while(hmap.containsKey(--temp))
+		         {
+		             x++;
+		             hmap.put(temp , true);
+		         }
+		         temp = a[i];
+		         while(hmap.containsKey(++temp))
+		         {
+		             x++;
+		             hmap.put(temp , true);
+		         }
+		         if(x>max)
+		         max = x;
+		        }
+		    }
+		    System.out.println(max);
+		}
+	}
+}
