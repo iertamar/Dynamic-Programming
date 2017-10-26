@@ -1,0 +1,46 @@
+import java.util.*;
+
+class Node
+{
+    int data;
+    Node left, right;
+
+    public Node(int item)
+    {
+        data = item;
+        left = right = null;
+    }
+}
+class BinaryTree
+{
+    static int largestSum(Node root)
+    {
+        if(root==null)
+            return 0;
+        int x = 0 , y =0;
+        if(root.left!=null)
+            x = largestSum(root.left.left) + largestSum(root.left.right);
+        if(root.right!=null)
+            x = x+ largestSum(root.right.left) + largestSum(root.right.right);
+        x = x + root.data;
+        y = largestSum(root.left) + largestSum(root.right);
+        return Math.max(x , y);
+    }
+}
+
+class main
+{
+    public static void main(String[] args) {
+        Node root;
+        root = new Node(25);
+        root.left = new Node(12);
+        root.right = new Node(13);
+        root.left.left = new Node(10);
+        root.right.left = new Node(11);
+        root.left.right = new Node(20);
+        root.right.right = new Node(30);
+        root.right.left.right = new Node(72);
+        int ans = BinaryTree.largestSum(root);
+        System.out.println(ans);
+    }
+}
