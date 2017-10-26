@@ -1,0 +1,48 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class GFG {
+	public static void main (String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int t = sc.nextInt();
+		while(t-->0)
+		{
+		    int n = sc.nextInt();
+		    int a[] = new int[n+1];
+		    int totalSum = 0;
+		    a[0] = 0;
+		    for(int i=1; i<=n; i++)
+		    {
+		        a[i] = sc.nextInt();
+		        totalSum = totalSum + a[i];
+		    }
+		    if(totalSum%2!=0)
+		    System.out.println("NO");
+		    else
+		    {
+		        int s = totalSum/2 ;
+		     boolean dp[][] = new boolean[n+1][s+1];
+		     for(int i =0; i<=n; i++)
+		     dp[i][0] = true;
+		     for(int j = 1; j<=s ; j++)
+		     dp[0][j] = false;
+		     for(int i = 1; i<=n ; i++)
+		     {
+		         for(int j = 1; j<=s ; j++)
+		         {
+		             dp[i][j] = dp[i-1][j];
+		             if(a[i]<=j && dp[i-1][j-a[i]] ==true)
+		             dp[i][j] = dp[i-1][j-a[i]];
+		             
+		         }
+		     }
+		     if(dp[n][s]==true)
+		     System.out.println("YES");
+		     else
+		     System.out.println("NO");
+		    }
+		     
+		}
+	}
+}
