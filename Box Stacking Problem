@@ -1,0 +1,70 @@
+import java.io.*;
+import java.util.*;
+class box implements Comparable<box>{
+    int l , b , h ;
+    public box(int l , int b, int h)
+    {
+        this.l = l;
+        this.b = b;
+        this.h = h;
+    }
+    public int compareTo(box m)
+    {
+        return this.l * this.b - m.l * m.b ;
+    }
+}
+
+class Hello {
+    public static void main (String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int x , y , z , t1 , t2 , t3;
+        ArrayList<box> list = new ArrayList<box>();
+        for(int i = 0; i<3*n; i++)
+        {
+            x = sc.nextInt();
+            y = sc.nextInt();
+            z = sc.nextInt();
+            t1 = x;
+            t2 = y ; t3 = z;
+            list.add(new box(x , y , z));
+            i++;
+            x = x;
+            y = t3;
+            z = t2;
+            list.add(new box(x , y , z));
+            i++;
+            x = t2;
+            y = t3;
+            z = t1;
+            list.add(new box(x , y , z));
+
+        }
+        Collections.sort(list , Collections.reverseOrder());
+        int height[] = new int[3*n];
+        int max = 0 ;
+        for(int i = 0; i<3*n ; i++)
+        {
+            height[i] = list.get(i).h;
+            if(max < height[i] )
+                max = height[i];
+        }
+        for(int  i = 1 ; i<list.size(); i++)
+        {
+            for (int j =0 ; j<i ; j++)
+            {
+                if (list.get(j).l > list.get(i).l && list.get(j).b > list.get(i).b)
+                {
+                    if(height[i] < height[j] + list.get(i).h)
+                    {
+                        height[i] = height[j] + list.get(i).h;
+                        if(max < height[i] )
+                            max = height[i];
+                    }
+                }
+            }
+        }
+        System.out.print(max);
+    }
+}
+// sorting done based on area
