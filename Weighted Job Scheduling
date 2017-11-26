@@ -1,0 +1,67 @@
+package DP;
+import java.util.*;
+class job implements Comparable<job>
+{
+    int st , et , profit;
+    job(int st, int et , int profit)
+    {
+        this.st = st;
+        this.et = et;
+        this.profit = profit;
+    }
+
+    public int compareTo(job j)
+    {
+        return this.et - j.et;
+    }
+}
+
+public class WeightedJobScheduling {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<job> list = new ArrayList<>();
+        System.out.println("Enter total number of jobs : ");
+        int n = sc.nextInt();
+        int  s,e,p;
+        System.out.println("Enter all jobs with \n start time : end time : profit");
+        for (int i =0; i<n ; i++)
+        {
+            s = sc.nextInt();
+            e = sc.nextInt();
+            p = sc.nextInt();
+            list.add(new job(s,e,p));
+
+        }
+        // sorting based on ending time
+        Collections.sort(list);
+        for (int i = 0; i<list.size(); i++)
+        {
+            System.out.println(list.get(i).st + " "+list.get(i).et + " "+list.get(i).profit);
+        }
+
+        int dp[] = new int[n];
+        int x , y, z;
+        dp[0] = list.get(0).profit;
+
+        for (int i = 1 ; i<list.size(); i++)
+        {
+            // include
+            y =0;
+            for (int j = 0 ; j<i; j++)
+            {
+                if(list.get(j).et<=list.get(i).st)
+                    y = dp[j];
+                else
+                    break;
+            }
+            x = y + list.get(i).profit;
+
+            //not include
+            z = dp[i-1];
+
+            dp[i] = Math.max(x , z);
+
+        }
+        System.out.println(dp[n-1]);
+    }
+}
