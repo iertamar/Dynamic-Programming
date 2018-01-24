@@ -1,0 +1,58 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+ {
+   static int[][][][] dp = new int[10][10][10][3];
+  
+	public static void main (String[] args)
+	 {
+	 Scanner sc = new Scanner(System.in);
+	 int t = sc.nextInt();
+	 while(t-->0)
+	 {
+	     int p = sc.nextInt();
+	     int q = sc.nextInt();
+	     int r = sc.nextInt();
+   for(int i = 0; i<10; i++)
+   {
+        for(int j = 0; j<10; j++)
+        {
+           for(int k = 0; k<10; k++)
+           {
+                for(int l = 0; l<3; l++)
+               {
+                  dp[i][j][k][l] = -1; 
+               }
+           }
+       } 
+   }
+	     System.out.println(countWays(p,q,r));
+	 }
+	 
+	 }
+	 public static int countWays(int p, int q, int r)
+	 {
+	    return countWaysUtil(p , q , r , 0) + countWaysUtil(p,q,r,1) + countWaysUtil(p,q,r,2);
+	 }
+	 public static int countWaysUtil(int p, int q, int r , int last)
+	 {
+	     if(p<0 || q<0 || r<0)
+	     return 0;
+	     if(p==1&&q==0&&r==0&&last==0)
+    	        return 1;
+    	   if(p==0&&q==1&&r==0&&last==1)
+    	        return 1;
+    	   if(p==0&&q==0&&r==1&&last==2)
+    	        return 1;
+	     if(dp[p][q][r][last]!=-1) //this problem has been already solved
+	       return dp[p][q][r][last];
+	     if(last==0)
+	       dp[p][q][r][last] = countWaysUtil(p-1,q,r,1) + countWaysUtil(p-1,q,r,2);
+	     else if(last==1)
+	       dp[p][q][r][last] = countWaysUtil(p,q-1,r,0) + countWaysUtil(p,q-1,r,2);
+	     else
+	       dp[p][q][r][last] = countWaysUtil(p,q,r-1,0) + countWaysUtil(p,q,r-1,1);
+	     return dp[p][q][r][last];
+	 }
+}
