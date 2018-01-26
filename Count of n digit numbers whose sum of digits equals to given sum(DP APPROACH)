@@ -1,0 +1,54 @@
+import java.util.*;
+
+public class CountNumber {
+    static int dp[][];
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int s = sc.nextInt();
+        dp = new int[n][s];
+        for(int i = 0 ; i<n ; i++)
+        {
+            for(int j = 0; j<s ; j++)
+            {
+                dp[i][j] = -1;
+            }
+        }
+        System.out.println(finalCount(n , s));
+        for(int i = 0 ; i<n ; i++)
+        {
+            for(int j = 0; j<s ; j++)
+            {
+                System.out.print(dp[i][j] +" ");
+            }
+            System.out.println();
+        }
+    }
+    public static int finalCount(int n , int sum)
+    {
+        int ans = 0;
+        for(int i =1; i<=9; i++)
+        {
+            if(sum-i >=0)
+                ans = ans + countRec(n-1 , sum -i);
+        }
+        return ans;
+    }
+    public static int countRec(int n , int s)
+    {
+        if(n==0)
+            return s==0 ? 1 : 0 ;
+        if (s==0)
+            return 1;
+        if(dp[n][s]!=-1)
+            return dp[n][s];
+        int ans = 0;
+        for (int i =0; i<=9; i++)
+        {
+            if(s-i>=0)
+                ans = ans + countRec(n-1 , s-i);
+        }
+        dp[n][s] = ans;
+        return dp[n][s];
+    }
+}
