@@ -1,0 +1,52 @@
+import java.util.*;
+
+public class longestpath {
+    static int n;
+    public static void main(String args[])
+    {
+        Scanner sc =  new Scanner(System.in);
+         n= sc.nextInt();
+        int a[][] = new int[n][n];
+        int dp[][] = new int[n][n];
+        for(int i = 0; i<n ; i++)
+        {
+            for(int j = 0; j<n ; j++)
+            {
+                a[i][j] = sc.nextInt();
+                dp[i][j] = -1;
+            }
+        }
+        int res = 1;
+        for(int i = 0; i<n ; i++)
+        {
+            for(int j = 0; j<n ; j++)
+            {
+              if(dp[i][j] == -1)
+                  flp(i , j  ,a  , dp);
+              res = Math.max(res , dp[i][j]);
+            }
+        }
+        System.out.println(res);
+    }
+    public static int flp(int i , int  j , int a[][] , int dp[][])
+    {
+        if(i<0 || j<0 || i>n-1 || j>n-1)
+            return 0;
+        if(dp[i][j]!=-1)
+            return dp[i][j];
+
+        if (j<n-1 && (a[i][j] +1 ==a[i][j+1]))
+            return dp[i][j] = 1 + flp(i , j+1 , a , dp);
+
+        if (j>0 && (a[i][j] +1 ==a[i][j-1]))
+            return dp[i][j] = 1 + flp(i , j-1 , a , dp);
+
+        if (i<n-1 && (a[i][j] +1 ==a[i+1][j]))
+            return dp[i][j] = 1 + flp(i+1 , j , a , dp);
+
+        if (i>0 && (a[i][j] +1 ==a[i-1][j]))
+            return dp[i][j] = 1 + flp(i-1 , j , a , dp);
+        return dp[i][j] = 1;
+    }
+
+}
