@@ -1,0 +1,44 @@
+import java.util.*;
+
+public class practice {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int th = sc.nextInt();
+        int a[] = new int[n+1];
+        for(int i = 1; i<=n ; i++)
+        {
+            a[i] = sc.nextInt();
+        }
+        int dp[][] = new int[n+1][n+1];
+        for(int i =1; i<=n ; i++)
+            dp[i][i] = a[i] ;
+
+        for(int l = 2; l<=n ; l++)
+        {
+           for(int i = 1; i<=n-l+1 ; i++)
+           {
+               int j = i+l-1 ;
+               if(th>=l)
+               {
+                   for(int x = i; x<=j ; x++)
+                   {
+                       if(dp[i][j]<a[x])
+                           dp[i][j] = a[x] ;
+                   }
+               }
+               else
+               {
+                   dp[i][j] = Integer.MAX_VALUE ;
+                   for(int x = i; x<j ; x++)
+                   {
+                    if(dp[i][j] > (dp[i][x] + dp[x+1][j]))
+                        dp[i][j]  = dp[i][x] + dp[x+1][j] ;
+                   }
+               }
+           }
+        }
+        System.out.println(dp[1][n]);
+    }
+
+}
