@@ -1,0 +1,58 @@
+// find out minlength which contains the degree of array where degree of array is maximum 
+// frquency of any elements of array
+//for example array = {2 , 1 , 4 , 1 , 1 ,1, 4,2,2,2}
+// degree = 4 { because 2 occurs 4 times and 1 also occurs 4 times }
+//answer will be min length of array which contains all 1 or all 2 ;
+// so answer is 5
+
+import java.util.*;
+
+class mine{
+    int si ;
+    int ei ;
+    int max;
+    mine(int si , int ei , int max)
+    {
+        this.si  = si ;
+        this.ei = ei ;
+        this.max = max ;
+    }
+}
+
+public class temp{
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int arr[] = {2 , 1 , 4 , 1 , 1 , 4,2,2,2} ;
+        int max = 1 , min=1 ;
+        HashMap<Integer , mine> hmap = new HashMap<>();
+        for(int i = 0; i < arr.length ; i++)
+        {
+            if(hmap.containsKey(arr[i]))
+            {
+                hmap.put(arr[i] , new mine(hmap.get(arr[i]).si , i , (hmap.get(arr[i]).max)+1)) ;
+                continue ;
+            }
+                hmap.put(arr[i] , new mine(i , i , 1));
+        }
+        Set set = hmap.entrySet();
+        Iterator itr = set.iterator();
+        while(itr.hasNext())
+        {
+            Map.Entry me = (Map.Entry) itr.next();
+            int key = (Integer) me.getKey() ;
+            mine value = (mine) me.getValue() ;
+            int tempmax = value.max ;
+            int templen = value.ei - value.si + 1 ;
+            //System.out.println(templen+"  "+tempmax);
+            if(tempmax==max && templen<min )
+                min = templen ;
+            else if (tempmax > max)
+            {
+                min = value.ei - value.si + 1 ;
+                max = tempmax ;
+            }
+
+        }
+        System.out.println(min);
+    }
+}
